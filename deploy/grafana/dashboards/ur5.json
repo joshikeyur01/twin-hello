@@ -1,0 +1,34 @@
+{
+  "title": "twin-hello · UR5",
+  "uid": "twin-hello-ur5",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "1s",
+  "time": { "from": "now-5m", "to": "now" },
+  "panels": [
+    {
+      "id": 1,
+      "title": "Joint positions (rad)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "query": "from(bucket: \"telemetry\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r.asset == \"ur5\" and r.metric == \"position\")\n  |> keep(columns: [\"_time\", \"_value\", \"joint\"])"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Joint velocities (rad/s)",
+      "type": "timeseries",
+      "gridPos": { "x": 0, "y": 8, "w": 24, "h": 8 },
+      "targets": [
+        {
+          "refId": "A",
+          "query": "from(bucket: \"telemetry\")\n  |> range(start: -5m)\n  |> filter(fn: (r) => r.asset == \"ur5\" and r.metric == \"velocity\")\n  |> keep(columns: [\"_time\", \"_value\", \"joint\"])"
+        }
+      ]
+    }
+  ]
+}
